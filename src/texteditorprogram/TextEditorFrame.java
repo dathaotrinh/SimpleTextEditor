@@ -21,8 +21,11 @@ import javax.swing.JFileChooser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.util.Scanner;
 import java.io.PrintWriter;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 
@@ -149,7 +152,11 @@ public class TextEditorFrame extends JFrame implements ActionListener {
             String content = ""; // declare a string variable named content
             
             JFileChooser chooser = new JFileChooser(); // create a JFileChooser object
- 
+            
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(".TXT", "txt");
+            
+            chooser.setFileFilter(filter);
+            
             int result = chooser.showOpenDialog(null); // open the dialog for the user to select the file to open and assign to the result variable
      
             if (result == JFileChooser.APPROVE_OPTION) {              
@@ -190,6 +197,12 @@ public class TextEditorFrame extends JFrame implements ActionListener {
         
             File selected = chooser.getSelectedFile(); // assign the file selected to selected variable
                             
+            if(!selected.toString().endsWith(".txt"))
+            {
+                String path = selected.toString() + ".txt";
+                selected = new File(path);
+            }
+
             try { // instead of using "throws exception" method, using try - catch method
                                         
                 PrintWriter  fileWriter = new PrintWriter (selected); // access to the selected File to write on it
@@ -204,7 +217,7 @@ public class TextEditorFrame extends JFrame implements ActionListener {
                             
                     }
                 }                
-        
+            
         }
 
 
